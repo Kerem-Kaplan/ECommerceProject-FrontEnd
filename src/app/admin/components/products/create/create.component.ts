@@ -28,12 +28,27 @@ constructor(spinner:NgxSpinnerService,private productService:ProductService,priv
     create_product.stock=parseInt(stock.value)
     create_product.price=parseFloat(price.value)
 
+    if(!name.value){
+      this.alertify.message("Lütfen adı gürün",{
+        dismissOthers:true,
+        messageType:MessageType.Error,
+        position:Position.TopRight
+      })
+      return
+    }
+
     this.productService.createProduct(create_product,()=>{
       this.hideSpinner(SpinnerType.BallAtom)
-      this.alertify.message("Urun basariyla eklenmiştir",{
+      this.alertify.message("Urun basariyla eklenmistir",{ 
         dismissOthers:true,
         messageType:MessageType.Success,
         position:Position.TopLeft
+      })
+    },errorMessage=>{
+      this.alertify.message(errorMessage,{
+        dismissOthers:true,
+        messageType:MessageType.Error,
+        position:Position.TopCenter
       })
     })
 
