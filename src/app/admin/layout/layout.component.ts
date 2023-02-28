@@ -13,12 +13,7 @@ export class LayoutComponent implements OnInit{
   
   
   ngOnInit(): void {
-    this.alertify.message("Merhaba",{
-      messageType:MessageType.Success,
-      delay:3,
-      position:Position.TopCenter
-
-    })
+  
     
   }
   d(){

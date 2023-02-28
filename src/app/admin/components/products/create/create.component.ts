@@ -2,7 +2,7 @@ import { AlertifyService, MessageType, Position } from './../../../../services/a
 import { BaseComponent, SpinnerType } from './../../../../base/base.component';
 import { Create_Product } from './../../../../contracts/create_product';
 
-import { Component,OnInit } from '@angular/core';
+import { Component,EventEmitter,OnInit, Output } from '@angular/core';
 import { ProductService } from 'src/app/services/common/models/product.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -21,6 +21,8 @@ constructor(spinner:NgxSpinnerService,private productService:ProductService,priv
   ngOnInit(): void {
     
   }
+  @Output() createdProduct:EventEmitter<Create_Product> =new EventEmitter()
+
   createProduct(name:HTMLInputElement,stock:HTMLInputElement,price:HTMLInputElement){
     this.showSpinner(SpinnerType.BallAtom)
     const create_product:Create_Product=new Create_Product();
@@ -44,6 +46,7 @@ constructor(spinner:NgxSpinnerService,private productService:ProductService,priv
         messageType:MessageType.Success,
         position:Position.TopLeft
       })
+      this.createdProduct.emit(create_product)
     },errorMessage=>{
       this.alertify.message(errorMessage,{
         dismissOthers:true,

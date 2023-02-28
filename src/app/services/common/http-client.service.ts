@@ -21,7 +21,7 @@ private url(requestParameter:Partial<RequestParameters>):string{
     if(requestParameter.fullEndpoint){
       url=requestParameter.fullEndpoint
     }else{
-      url=`${this.url(requestParameter)}${id ? ` /${id}` : ""}`
+      url=`${this.url(requestParameter)}${id ? ` /${id}` : ""}${requestParameter.queryString?`?${requestParameter.queryString}`:""}`
     }
     
 
@@ -34,7 +34,7 @@ private url(requestParameter:Partial<RequestParameters>):string{
     if(requestParameter.fullEndpoint){
       url=requestParameter.fullEndpoint
     }else{
-      url=`${this.url(requestParameter)}`
+      url=`${this.url(requestParameter)}${requestParameter.queryString?`?${requestParameter.queryString}`:""}`
     }
 
 
@@ -48,7 +48,7 @@ private url(requestParameter:Partial<RequestParameters>):string{
     if(requestParameter.fullEndpoint){
       url=requestParameter.fullEndpoint
     }else{
-      url=`${this.url(requestParameter)}`
+      url=`${this.url(requestParameter)}${requestParameter.queryString?`?${requestParameter.queryString}`:""}`
     }
 
     return this.httpClient.put<T>(url,body,{headers:requestParameter.headers})
@@ -59,7 +59,7 @@ private url(requestParameter:Partial<RequestParameters>):string{
     if(requestParameter.fullEndpoint){
       url=requestParameter.fullEndpoint
     }else{
-      url=`${this.url(requestParameter)}/${id}`
+      url=`${this.url(requestParameter)}/${id}${requestParameter.queryString?`?${requestParameter.queryString}`:""}`
     }
 
   return  this.httpClient.delete<T>(url,{headers:requestParameter.headers})
@@ -69,6 +69,8 @@ private url(requestParameter:Partial<RequestParameters>):string{
 export class RequestParameters{
   controller?:string;
   action?:string
+  queryString?:string
+
   headers?:HttpHeaders
   baseUrl?:string
   fullEndpoint?:string
